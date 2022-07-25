@@ -1,5 +1,16 @@
 # Multiverse Self Study Plan
 
+
+##### Table of Contents
+- [Multiverse Self Study Plan](#multiverse-self-study-plan)
+        - [Table of Contents](#table-of-contents)
+  - [Technologies to focus on](#technologies-to-focus-on)
+  - [Overall Idea for Final Project](#overall-idea-for-final-project)
+  - [What am I using to study?](#what-am-i-using-to-study)
+  - [Progress](#progress)
+    - [Monday](#monday)
+    - [Tuesday](#tuesday)
+
 ## Technologies to focus on
 - React
   - useContext hook
@@ -254,3 +265,5 @@ Went through [React 17: Getting Started](https://app.pluralsight.com/library/cou
     ![image](./readmeImg/one.png "image2")
     ![image](./readmeImg/two.png "image3")
     ![image](./readmeImg/three.png "image4")
+
+### Tuesday 
