@@ -57,50 +57,50 @@ Went through [React 17: Getting Started](https://app.pluralsight.com/library/cou
     - Parent components can flow data and behavior to their child components through props
 - Seperation of responsibilities (concerns)
     - make components that each have different responsibilites
-```javascript
-    import './App.css';
-import Display from './components/Display';
-import Button from './components/Button';
-import { useState } from "react";
+        ```javascript
+            import './App.css';
+        import Display from './components/Display';
+        import Button from './components/Button';
+        import { useState } from "react";
 
-function App() {
+        function App() {
 
-  const[counter, setCounter] = useState(0);
+        const[counter, setCounter] = useState(0);
 
-  const incrementCounter = (increment) => setCounter(counter + increment);
+        const incrementCounter = (increment) => setCounter(counter + increment);
 
-  return (
-    <div className="App">
-      <Button onClickFunction={incrementCounter} increment={1}/>
-      <Button onClickFunction={incrementCounter} increment={5}/>
-      <Button onClickFunction={incrementCounter} increment={10}/>
-      <Button onClickFunction={incrementCounter} increment={100}/>
-      <Button onClickFunction={incrementCounter} increment={200}/>
-      <Display counter={counter}/>
-    </div>
-  );
-}
+        return (
+            <div className="App">
+            <Button onClickFunction={incrementCounter} increment={1}/>
+            <Button onClickFunction={incrementCounter} increment={5}/>
+            <Button onClickFunction={incrementCounter} increment={10}/>
+            <Button onClickFunction={incrementCounter} increment={100}/>
+            <Button onClickFunction={incrementCounter} increment={200}/>
+            <Display counter={counter}/>
+            </div>
+        );
+        }
 
-export default App;
-```
-```javascript
-    const Display = (props) => {
+        export default App;
+        ```
+        ```javascript
+            const Display = (props) => {
 
-    return(
-        <div>{props.counter}</div>
-    );
-}
-export default Display;
-```
-```javascript
-    const Button = (props) => {
-    const handleClick = () => props.onClickFunction(props.increment)
-    return(
-        <button onClick={handleClick}>+{props.increment}</button>
-    );
-}
-export default Button;
-```
+            return(
+                <div>{props.counter}</div>
+            );
+        }
+        export default Display;
+        ```
+        ```javascript
+            const Button = (props) => {
+            const handleClick = () => props.onClickFunction(props.increment)
+            return(
+                <button onClick={handleClick}>+{props.increment}</button>
+            );
+        }
+        export default Button;
+        ```
 - useState hook
   - a hook that lets us add state to function components
   - ``` const [val, setVal] = useState(initialVal);```
@@ -109,3 +109,136 @@ export default Button;
   - we pass an inital value in useState when we first declare it
 
 #### Modern JS Crash Course
+- Block scope
+    - if we declare a var variable in a block scope, the variable can be accessed outside of it, in modern javascript it is reccommended to use let instead. With let, variables can not be accessed outside of block scope.
+        ``` javascript
+        for(var i = 1; i <= 10; i++){
+            //blocks scope
+        }
+        //with var i can be accessed from outside which can cause issues instead use let
+        for(let i = 1; i<= 10; i++){
+            //block scope
+        }
+        //with let, the variable i can not be accessed
+        ```
+- Function Scope
+    ```javascript
+    function sum(a, b){
+        //function scope
+        let result = a + b
+    }
+    ```
+- const variables
+  - use const when the reference assigned to a variable is meant to be constant.
+  - const strings and numbers are not mutable however const arrays are objects are. We can not change the reference (so the array or object will always be pointing to the same array or object) but we can change the content of the array or object. So we can push into an array or change values in an object. For example the following code would work and would not cause any errors.
+    ``` javascript
+    const numbers = [2,4,6];
+
+    numbers.push(7);
+    console.log(numbers); // [2, 4, 6, 7]
+
+    const person ={
+        firstName:'Bob',
+        lastName:'Riley'
+    };
+
+    person.firstName = 'Sarah';
+    console.log(person) // { firstName: 'Sarah', lastName: 'Riley' }
+    ```
+- Object Literal
+
+  ```javascript
+  const mystery = 'answer';
+  const InverseOfPI = 1 / Math.PI;
+
+    const obj= {
+    p1: 10,
+    p2: 20,
+    f1() {},
+    f2: () => {},
+    [mystery]: 42,
+    InverseOfPI, //same as typing InverseOfPI: InverseOfPI
+    }
+
+    console.log(obj.mystery) // undefined
+    console.log(obj.answer) // 42
+  ```
+- Desctructuring and Rest/Spread
+    ```javascript
+    //instead of 
+    const PI = Math.PI;
+    const E = Math.E;
+    const SQRT2 = Math.SQRT2;
+
+    //use
+    const {PI, E, SQRT2} = Math;
+
+    const[first, second, third, forth] = [10,20,30,40];
+
+    console.log(first); // 10
+
+    // spread operator
+    const[first, ...restOfItems] = [10,20,30,40];
+    console.log(restOfItems); // [ 20, 30, 40 ]
+
+    const data = {
+    temp1: '001',
+    temp2: '002',
+    firstName: 'John',
+    lastNameL: 'Doe'
+    };
+
+    //create a new object that has the same data except for temp1 and temp2
+    const{temp1, temp2, ...person} = data;
+
+    console.log(person); // { firstName: 'John', lastNameL: 'Doe' }
+
+    const newObj = {
+    ...person
+    }
+    console.log(newObj); // { firstName: 'John', lastNameL: 'Doe' }
+    ```
+- Classes
+    ```javascript
+    class Person{
+        constructor(name){
+            this.name = name;
+        }
+        //method
+        greet() {
+            console.log(`Hello ${this.name}`)
+        }
+    }
+    //child of Person class
+    //Student class inherets variables and methods from parent class
+    class Student extends Person{
+        constructor(name, level){
+            super(name);
+            this.level = level;
+        }
+        greet() {
+            console.log(`Hello ${this.name} from ${this.level}`)
+        }
+    }
+
+    //classes are blueprints for objects
+    //to instantiate an object from a class you need to use new keyword
+    const o1 = new Person("Max");
+    const o2 = new Student("Tina", "11th Grade");
+    const o3 = new Student("Mary", "10th Grade");
+    //change what greet logs
+    o3.greet = () => console.log('I am special!'); 
+
+    o1.greet(); //Hello Max
+    o2.greet(); //Hello Tina from 11th Grade
+    o3.greet(); //I am Special!
+    ```
+ - Promises and Async/Await
+    ```javascript
+    const fetchData = async () => {
+        const response = await fetch('https://api.github.com');
+        const data = await response.json();
+        console.log(data);
+        }
+    fetchData();
+    ```
