@@ -12,8 +12,12 @@ Create a project in React using Context (with useContext hook) for state managem
 ## What am I using to study?
 - [React 17: Getting Started](https://app.pluralsight.com/library/courses/react-js-getting-started/table-of-contents)
 - [5 New Hooks in React 18](https://betterprogramming.pub/5-new-hooks-in-react-18-300aa713cefe)
+- [React 18: First Look](https://app.pluralsight.com/library/courses/react-18-first-look/table-of-contents)
 - [Testing React 16 Applications with Jest 26](https://app.pluralsight.com/library/courses/testing-react-applications-jest/table-of-contents)
 
 ## Progress
+[Pluralsight Profile](https://app.pluralsight.com/profile/andrea-berrocal-b)
 
 ### Monday
+
+
