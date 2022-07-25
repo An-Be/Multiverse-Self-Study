@@ -7,7 +7,36 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.title{
+  margin-top: 1rem;
+  margin-left: 1rem;
+  font-size: 2rem;
+  font-weight: bold;
+}
+form {
+  margin-left: 1rem;
+  padding: 2rem;
+  background-color: rgb(229, 225, 225);
+  display: flex;
+  justify-content: center;
+  width: 300px;
+}
+.container{
+  display: flex;
+
+  flex-direction: column;
+}
+.github-profile{
+  margin: 1rem;
+  display: flex;
+  align-items: center;
+}
+.github-profile img {
+  margin: 1rem;
+  width: 5rem;
+  
+}
+.name{
+  font-size: 1.5rem;
+  font-weight: bold;
 }
