@@ -243,3 +243,14 @@ Went through [React 17: Getting Started](https://app.pluralsight.com/library/cou
     fetchData();
     ```
 - The GitHub Cards App
+  - App that using axios to get github users by inputting their username
+  - used both class components and function components to better understand class components
+  - compononents:
+    - Card
+    - CardList
+    - Form
+  - images:
+    ![image](./readmeImg/four.png "image1")
+    ![image](./readmeImg/one.png "image2")
+    ![image](./readmeImg/two.png "image3")
+    ![image](./readmeImg/three.png "image4")
