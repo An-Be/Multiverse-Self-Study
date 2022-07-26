@@ -21,8 +21,8 @@
 Create a project in React using Context (with useContext hook) for state management. Additionally, you could learn how to use Jest to specifically test your React frontend, as Jest comes prebuilt in the create-react-app. Additionally, think about trying to familiarize yourself with the new hooks of React 18.
 
 ## What am I using to study?
-- [ ] [React 17: Getting Started](https://app.pluralsight.com/library/courses/react-js-getting-started/table-of-contents) - in progress
-- [ ] [Using React 17 Hooks](https://app.pluralsight.com/library/courses/using-react-hooks/table-of-contents)
+- [x] [React 17: Getting Started](https://app.pluralsight.com/library/courses/react-js-getting-started/table-of-contents)
+- [ ] [Using React 17 Hooks](https://app.pluralsight.com/library/courses/using-react-hooks/table-of-contents) - in progress
 - [ ] [5 New Hooks in React 18](https://betterprogramming.pub/5-new-hooks-in-react-18-300aa713cefe)
 - [ ] [React 18: First Look](https://app.pluralsight.com/library/courses/react-18-first-look/table-of-contents)
 - [ ] [Testing React 16 Applications with Jest 26](https://app.pluralsight.com/library/courses/testing-react-applications-jest/table-of-contents)
