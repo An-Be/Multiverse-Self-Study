@@ -22,6 +22,7 @@ Create a project in React using Context (with useContext hook) for state managem
 
 ## What am I using to study?
 - [ ] [React 17: Getting Started](https://app.pluralsight.com/library/courses/react-js-getting-started/table-of-contents) - in progress
+- [ ] [Using React 17 Hooks](https://app.pluralsight.com/library/courses/using-react-hooks/table-of-contents)
 - [ ] [5 New Hooks in React 18](https://betterprogramming.pub/5-new-hooks-in-react-18-300aa713cefe)
 - [ ] [React 18: First Look](https://app.pluralsight.com/library/courses/react-18-first-look/table-of-contents)
 - [ ] [Testing React 16 Applications with Jest 26](https://app.pluralsight.com/library/courses/testing-react-applications-jest/table-of-contents)
@@ -267,3 +268,12 @@ Started [React 17: Getting Started](https://app.pluralsight.com/library/courses/
     ![image](./readmeImg/three.png "image4")
 
 ### Tuesday 
+- The Star Match Game
+  - users have to select numbers that add up to the number of stars
+  - if user selects a number or group of numbers that are greater than the amount of stars, the numbers turn red
+  - numbers selected that match or add up to the number of stars turn green
+  - if a user selects a number than it less than the number of stars it turns blue
+  - if a user does not complete the game within 10 seconds, the game resets. In react the game is reset when the id of the comonent changes and react unmounts and remounts the game component which resets all states.
+  - used custom hooks, useEffect, and useState
+- images:
+  ![image](./readmeImg/five.png "image5")
