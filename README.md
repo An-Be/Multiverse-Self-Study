@@ -22,9 +22,9 @@ Create a project in React using Context (with useContext hook) for state managem
 
 ## What am I using to study?
 - [x] [React 17: Getting Started](https://app.pluralsight.com/library/courses/react-js-getting-started/table-of-contents)
-- [ ] [Using React 17 Hooks](https://app.pluralsight.com/library/courses/using-react-hooks/table-of-contents) - in progress
-- [ ] [5 New Hooks in React 18](https://betterprogramming.pub/5-new-hooks-in-react-18-300aa713cefe)
+- [ ] [React Hooks Course](https://www.youtube.com/watch?v=LlvBzyy-558) - in progress
 - [ ] [React 18: First Look](https://app.pluralsight.com/library/courses/react-18-first-look/table-of-contents)
+- [ ] [5 New Hooks in React 18](https://betterprogramming.pub/5-new-hooks-in-react-18-300aa713cefe)
 - [ ] [Testing React 16 Applications with Jest 26](https://app.pluralsight.com/library/courses/testing-react-applications-jest/table-of-contents)
 
 ## Progress
@@ -113,12 +113,6 @@ Started [React 17: Getting Started](https://app.pluralsight.com/library/courses/
         }
         export default Button;
         ```
-- useState hook
-  - a hook that lets us add state to function components
-  - ``` const [val, setVal] = useState(initialVal);```
-  - val is the state variable
-  - setVal is a function to change the state
-  - we pass an inital value in useState when we first declare it
 
 #### Modern JS Crash Course
 - Block scope
@@ -277,3 +271,178 @@ Started [React 17: Getting Started](https://app.pluralsight.com/library/courses/
   - used custom hooks, useEffect, and useState
 - images:
   ![image](./readmeImg/five.png "image5")
+- React Hooks
+   - useState hook
+      - a hook that lets us add state to function components
+      - ``` const [val, setVal] = useState(initialVal);```
+      - val is the state variable
+      - setVal is a function to change the state
+      - we pass an inital value in useState when we first declare it
+  
+    ```javascript
+    import { useState } from 'react';
+    import './App.css';
+
+    function App() {
+      const [inputText, setInputText] = useState('');
+      const [historyList, setHistoryList] = useState([]);
+
+      return (
+        <div className="App">
+          <input 
+          value={inputText} 
+          onChange={(event) => {
+          setInputText(event.target.value);
+          setHistoryList([...historyList, event.target.value]);
+          }}
+          placeholder='Enter some text' />
+          <div>{inputText}</div>
+          <ul>
+            {historyList.map((item, index) => <div key={index}>{item}</div>)}
+          </ul>
+        </div>
+      );
+    }
+
+    export default App;
+    ```
+
+      - code above keeps track of user input by tracking any changes with onChange(). Anytime a user changes the input, that change is set in the inputText state. There is also a historyList state which keeps tracks of all changes being done.
+  - useRef Hook
+    - allows us to directly access an element in the DOM
+    - In the code below I am using ref on the input so whenever the button is clicked, the focus is on the input tag
+    - useRef can be used for example in cases where you think you can solve something with vanilla js
+    ```javascript
+      import { useRef } from "react";
+
+
+    const PracticeRef = () => {
+        const inputRef = useRef(null);
+
+        const onClick = () => {
+            console.log(inputRef.current.value);
+            //focus on input when button is clicked
+            inputRef.current.focus();
+            //to clear input
+            // inputRef.current.value = "";
+        }
+
+        return(
+            <div>
+                <h1>Andrea</h1>
+                <input ref={inputRef} type="text" placeholder="Ex..." />
+                <button onClick={onClick}>Change Name</button>
+            </div>
+        );
+    }
+    export default PracticeRef;
+    ```
+
+    - useReducer
+      - a hook that is very similar to useState but we can use it in cases where we have several states and need to update multiple states in the same function
+      - so instead of the code below
+      ```javascript
+      import { useState } from 'react';
+
+      const Practice = () => {
+
+          const [count, setCount] = useState(0);
+          const [showText, setShowText] = useState(false);
+
+          return(
+              <>
+              <h1>{count}</h1>
+                  <button  
+              onClick={() => {
+              setCount(count + 1)
+              setShowText(!showText);
+              }}
+              >Click here</button>
+              {showText && <p>This is a test</p>}
+            </>
+          );
+      }
+      export default Practice;
+      ```
+      - we would use useReducer as follows:
+    ```javascript
+        import { useReducer } from 'react';
+
+        //reducer function
+        //pass in the state and action
+        //action is used to determine what type of action we want to make
+        const reducer = (state, action) => {
+            switch(action.type) {
+                case "INCREMENT":
+                    return {count: state.count + 1, showText: state.showText}
+                case "TOGGLESHOWTEXT":
+                    return {count: state.count, showText: !state.showText}
+                default:
+                    return state;
+            }
+        }
+
+        const Practice = () => {
+
+            //dispatch is used to change the state
+            //in useREducer we pass in a reducer function and the intial state
+            const [state, dispatch] = useReducer(reducer, 
+                { count: 0, showText: true });
+
+            return(
+                <>
+                <h1>{state.count}</h1>
+                    <button  
+                onClick={() => {
+                    dispatch({type: "INCREMENT"})
+                    dispatch({type: "TOGGLESHOWTEXT"})
+                }}
+                >Click here</button>
+                {state.showText && <p>This is a test</p>}
+              </>
+            );
+        }
+        export default Practice;
+    ```
+      - useReducer is a lot like the syntax is redux
+  - useEffect
+    - the useEffect hooks lets us perform side effects in function components,you can use it to tell react that your component needs to do something after it is rendered. We can use useEffect instead componentDidMount etc... some examples of side effects are fetching data or directly updating the DOM.
+    - syntax 
+      - if there is nothing in the array then the useEffect only runs when the component first mounts but if you add something in the array like a state, it will run everytime the state changes
+    ```javascript
+        useEffect(() => {
+          console.log('in useEffect');
+          return = () => {
+            console.log('in useEffect cleanup')
+          }
+        },[])
+    ```
+    - below we put the fetch call in a useEffect which makes the getData function be called once when the component is rendered
+    ```javascript
+    import { useEffect, useState } from "react";
+
+    const PracticeEffect = () => {
+
+        const [comments, setComments] = useState([]);
+
+
+        useEffect(() => {
+            const getData = async () => {
+                const response = await fetch('https://jsonplaceholder.typicode.com/comments')
+                const data = await response.json();
+                setComments(data[0])
+            }
+            getData()
+                .catch(console.error)
+            console.log('API WAS CALLED')
+        }, [])
+
+
+        return(
+            <>
+            <div>{comments.email}</div>
+            </>
+        );
+    }
+    export default PracticeEffect;
+    ```
