@@ -10,6 +10,7 @@
   - [Progress](#progress)
     - [Monday](#monday)
     - [Tuesday](#tuesday)
+    - [Wednesday](#wednesday)
 
 ## Technologies to focus on
 - React
@@ -446,3 +447,90 @@ Started [React 17: Getting Started](https://app.pluralsight.com/library/courses/
     }
     export default PracticeEffect;
     ```
+### Wednesday
+- useLayoutEffect Hook
+  - useLayoutEffect looks very similar to UseEffect
+    ```javascript
+            useLayoutEffect(() => {
+            console.log('UseLayoutEffct')
+        })
+    ```
+    - But the useLayoutEffect is called before useEffecy, useLayoutEffect is called in an earlier stage of the page rendering. When you use useLayoutEffect whatever code you have written in it will pop up before the component is rendered. Unlike the useEffect which runs after the component is rendered.
+    - In the code below, if you look at the console you will see the log in the uselayoutEffect hook logs "Andrea" because that is the original value in the input before the page is rendered
+    ```javascript
+    import { useLayoutEffect, useEffect, useRef } from "react";
+        const PractUseLayout =  () => {
+
+            const inputRef = useRef(null)
+
+            useLayoutEffect(() => {
+                console.log('UseLayoutEffect:', inputRef.current.value)
+            }, [])
+
+            useEffect(() => {
+                inputRef.current.value = "HELLO"
+            }, [])
+
+            return (
+                <div>
+                    <input ref={inputRef} value="ANDREA" style={{ width: 400, height: 60 }} />
+                </div>
+            );
+        }
+        export default PractUseLayout;
+    ```
+    - we might want to use useLayoutEffect when we want to change the UI before the page is all loadeded, like for example if there is a super long API call
+- useImperativeHandle Hook
+  - allows us to pass functions and values from a child component to a parent component using ref.
+  - so lets say we want to use a toggle button function that manipulates a child component, from the parent component. We could pass the state but sometimes that may be too difficult to do or not a possibility, in these cases we can use forwardRef, useRef, and useImperativeHandle
+  - In the code below we are toggling the child button by clicking on the parent button. We do this by using forwardRef to be able to pass a ref to a function component being called in a parent component.
+  - To use forwardRef, you have to wrap the child function component in ```forwardref()``` and also pass ref as a parameter. Then we can use the useImperativeHandle Hook to make functions that can be accessed in the parent through the ref.
+    ```javascript
+    import { useRef } from "react";
+    import Button from "../components/Button";
+    const PracticeImperative = () => {
+        const buttonRef = useRef(null);
+
+        return (
+            <div>
+                <button
+                onClick={() => {
+                    buttonRef.current.alterToggle();
+                }}
+                >Button From Parent</button>
+                <Button ref={buttonRef} />
+            </div>
+        );
+    }
+    export default PracticeImperative;
+    ```
+
+    ```javascript
+    import { forwardRef, useImperativeHandle, useState } from "react";
+    const Button = forwardRef((props, ref) => {
+        //forwardRef allows us to transform a function component to allow it to accept a ref from its parent
+        //after wrapping the component in forward ref, we can pass in a ref as a parameter
+        const [toggle, setToggle] = useState(false)
+
+        //use ImperativeHandle hook allows us to define functions based on a ref
+        //we pass the ref and a function that returns an object
+        //create functions that we want to access through the parent
+        useImperativeHandle(ref, () => ({
+            alterToggle() {
+                setToggle(!toggle)
+            }
+        })) 
+        return (
+            <>
+                <button
+                    // onClick={() => {
+                    //     setToggle(!toggle);
+                    // }}
+                >Button From Child</button>
+                {toggle && <span>Toggle</span>}
+            </>
+        );
+    });
+    export default Button;
+    ```
+    - in the code above we are able to change the value of the state in the parent component even though the state exists in the child component AND we have not passed the state as props.
