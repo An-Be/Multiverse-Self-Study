@@ -1,8 +1,11 @@
-import Practice from './views/Practice';
-import PracticeEffect from './views/PracticeEffect';
-import PracticeRef from './views/PracticeRef';
-import PractUseLayout from './views/PracticeUseLayout';
-import PracticeImperative from './views/PracticeImperative';
+// import Practice from './views/Practice';
+// import PracticeEffect from './views/PracticeEffect';
+// import PracticeRef from './views/PracticeRef';
+// import PractUseLayout from './views/PracticeUseLayout';
+// import PracticeImperative from './views/PracticeImperative';
+// import PracticeContext from './views/PracticeContext';
+// import PracticeMemo from './views/PracticeMemo';
+import PracticeCallback from './views/PracticeCallback';
 import './App.css';
 
 function App() {
@@ -13,7 +16,10 @@ function App() {
     <PracticeEffect />
     <PracticeRef />
     <PractUseLayout /> */}
-    <PracticeImperative />
+    {/* <PracticeImperative /> */}
+    {/* <PracticeContext /> */}
+    {/* <PracticeMemo /> */}
+    <PracticeCallback />
     </div>
   );
 }
