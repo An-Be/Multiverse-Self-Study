@@ -24,8 +24,9 @@ Create a project in React using Context (with useContext hook) for state managem
 ## What am I using to study?
 - [x] [React 17: Getting Started](https://app.pluralsight.com/library/courses/react-js-getting-started/table-of-contents)
 - [x] [React Hooks Course](https://www.youtube.com/watch?v=LlvBzyy-558)
-- [ ] [React 18: First Look](https://app.pluralsight.com/library/courses/react-18-first-look/table-of-contents) - in progress
-- [ ] [5 New Hooks in React 18](https://betterprogramming.pub/5-new-hooks-in-react-18-300aa713cefe)
+- [x] [useTransition Hook](https://www.youtube.com/watch?v=N5R6NL3UE7I)
+- [x] [useDefferedValue Hook](https://www.youtube.com/watch?v=jCGMedd6IWA)
+- [x] [useId Hook](https://www.youtube.com/watch?v=_vwCKV7f_eA&list=RDCMUCFbNIlppjAuEX4znoulh0Cw&index=14)
 - [ ] [React Context API Course](https://www.youtube.com/watch?v=t9WmZFnE6Hg)
 - [ ] [Testing React 16 Applications with Jest 26](https://app.pluralsight.com/library/courses/testing-react-applications-jest/table-of-contents)
 
@@ -712,4 +713,127 @@ Started [React 17: Getting Started](https://app.pluralsight.com/library/courses/
         );
     }
     export default Child;
+    ```
+- useTransition Hook
+  - lets us make two different state changes at the same time and rank them in how important we want them to be. 
+  - we are basically setting a priority to different things in our program, this way our program runs a lot smoother and does not seem super slow.
+  - in the exampe below we have a function that runs to state functions, it sets the value typed into an input and then puts the value typed in into an array that accepts 20000 items. If we were to use this without useTransition, our program would be super slow and it would take forever just to see what the user is typing into the input. But if we use Usetransition and put the lower priority function (the loop) inside it, then we can immediatley see the input changes, and later on see the huge list being rendered.
+    ```javascript
+        import { useState, useTransition } from "react";
+        const PracticeTransition = () => {
+            //
+            const [isPending, startTransition] = useTransition();
+            const [input, setInput] = useState("");
+            const [list, setList] = useState([]);
+
+            const LIST_SIZE = 20000;
+
+            function handleChange(e) {
+                setInput(e.target.value)
+                //to use the transition we put the lower priority function instead startTransition
+                //now we will be sure that setInput will always run first and not sit there and wait until setList  has also completed
+                startTransition(() => {
+                    const l = [];
+                    for(let i = 0; i < LIST_SIZE; i++){
+                        l.push(e.target.value)
+                    }
+                    setList(l)
+                })
+
+            }
+
+            //we can use the isPending property passed into useTransition, to show something while our program is working on the low priority function
+            
+            return(
+                <>
+                    <input type="text" value={input} onChange={handleChange} />
+                    {isPending ? "Loading..." :
+                    list.map((item, index) => {
+                        return <div key={index}>{item}</div>
+                    })}
+                </>
+            );
+        }
+        export default PracticeTransition;
+    ```
+  - This is a hook that we should only really use when it is needed, because we are making our app do more renders than it would usually do. If there is code that is slowing down the whole application, it would be a good idea to use this hook.
+- UseDefferedValue hook
+  - This hook is very similar to useTransition we are sort of setting a throttle. State changes inside useDeffered will not happen until there has been no changes to the state for a considerable amount of time. 
+  - in the code below we have an input component that uses the useMemo hook to render a list everytime there is a change to the input. Without using useDeffered the program is slow and you can't really see what is typed into the input bar. After adding useDeffered, function in useMemo does not run until some type has passed since the user has type something in.
+    ```javascript
+    import List from "../components/List";
+    import { useState } from "react";
+    const PracticeDeferred = () => {
+        const [input, setInput] = useState("");
+
+        function handleChange(e) {
+            setInput(e.target.value)
+        }
+
+        return(
+            <>
+                <input type="text" value={input} onChange={handleChange} />
+                <List input={input} />
+            </>
+        );
+
+    }
+    export default PracticeDeferred;
+    ```
+    ```javascript
+    import { useMemo, useDeferredValue } from "react";
+    const List = ({ input }) => {
+        const LIST_SIZE = 20000;
+        //take the input and do not update until there has been some time between changes
+        const deferredInput = useDeferredValue(input);
+        const list = useMemo(() => {
+            const l = [];
+            for(let i = 0; i < LIST_SIZE; i++){
+                l.push(<div key={i}>{deferredInput}</div>)
+            }
+            return l;
+        }, [deferredInput])
+
+        return list;
+    }
+    export default List;
+    ```
+- useId Hook
+  - the useId hook gives the you ability to give your jsx elements random id's that do not change when the page is rerendered (as long as the order is still the same). This a lot better to use then using for example math.random to make an id because then the id would change everytime. 
+  - If you have multiple of the same jsx elements all you have to do is append something to the end of the {id} to make them unique
+    ```javascript
+    import { useId } from "react";
+
+        const EmailForm = () => {
+            //generates a random id and the same set of id are set even after a render
+            //this is better than using something like math.random because with math.random, the id would change with every render
+            const id = useId();  
+        return(
+            <>
+                <label htmlFor={`${id}-email`}>Email</label>
+                <input id={`${id}-email`} type="email" />
+                <br />
+                <label htmlFor={`${id}-name`}>Name</label>
+                <input id={`${id}-name`} type="text" />
+            </>
+        );
+        }
+        export default EmailForm;
+    ```
+
+    ```javascript
+    import EmailForm from "../components/EmailForm";
+
+    const PracticeId = () => {
+        return(
+            <>
+                <EmailForm />
+                <article style={{ marginBlock: "1rem"}}>
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quaerat, voluptas. Accusantium consectetur vero, neque officia, dolor sit modi amet ab, nobis unde maxime suscipit culpa vitae dolorum itaque quis aspernatur!
+                </article>
+                <EmailForm />
+            </>
+        );
+    }
+    export default PracticeId;
     ```
