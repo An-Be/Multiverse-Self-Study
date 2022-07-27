@@ -23,9 +23,10 @@ Create a project in React using Context (with useContext hook) for state managem
 
 ## What am I using to study?
 - [x] [React 17: Getting Started](https://app.pluralsight.com/library/courses/react-js-getting-started/table-of-contents)
-- [ ] [React Hooks Course](https://www.youtube.com/watch?v=LlvBzyy-558) - in progress
-- [ ] [React 18: First Look](https://app.pluralsight.com/library/courses/react-18-first-look/table-of-contents)
+- [x] [React Hooks Course](https://www.youtube.com/watch?v=LlvBzyy-558)
+- [ ] [React 18: First Look](https://app.pluralsight.com/library/courses/react-18-first-look/table-of-contents) - in progress
 - [ ] [5 New Hooks in React 18](https://betterprogramming.pub/5-new-hooks-in-react-18-300aa713cefe)
+- [ ] [React Context API Course](https://www.youtube.com/watch?v=t9WmZFnE6Hg)
 - [ ] [Testing React 16 Applications with Jest 26](https://app.pluralsight.com/library/courses/testing-react-applications-jest/table-of-contents)
 
 ## Progress
@@ -534,3 +535,181 @@ Started [React 17: Getting Started](https://app.pluralsight.com/library/courses/
     export default Button;
     ```
     - in the code above we are able to change the value of the state in the parent component even though the state exists in the child component AND we have not passed the state as props.
+- useContext Hook
+  - if you have a lot of states and need to pass the state around to other components, instead of passing each individual state as props, we can use ```useContext``` 
+  - ```useContext``` is pretty much a collection of states, this collection of states can then be accessed by any child component that is wrapped in ```<Context.Provider></Context.Provider>``` wrapper. 
+  - below we have a very small example where we want to access the username state in the User component and the setUsername state function in the Login component instead of passing props we use ```useContext``` and ```createContext``` to make a context (collection of states) and then access those states.
+    ```javascript
+    import { useState, createContext } from "react";
+    import Login from "../components/Login";
+    import User from "../components/User";
+
+    //create a context, a context is basically like a collection of states
+    export const AppContext = createContext(null);
+    //to use the context you need to wrap the components that you want to be able to access the states in whatever name you named the context.provider
+    //so in this case we would wrap them in <AppContext.Provider></AppContext.Provider>
+    //then you pass a value which would be all the states you want the other components to have access to
+
+    const PracticeContext = () => {
+        const [username, setUsername] = useState('');
+
+        return(
+            <AppContext.Provider value={{username, setUsername}}>
+                <Login /> <User />
+            </AppContext.Provider>
+        )
+    }
+    export default PracticeContext;
+    ```
+
+    ```javascript
+    import { useContext } from "react";
+    //import the context we created in the parent component
+    import { AppContext } from "../views/PracticeContext";
+
+    const Login = () => {
+        //now we can grab whatever states we want by destructuring the context
+        //we pass in the collection of states we created with createContext to useContext
+        const { setUsername } = useContext(AppContext)
+        return(
+            <div>
+                <input
+                    onChange={(event) => {
+                        setUsername(event.target.value)
+                    }}
+                />
+            </div>
+        );
+    }
+    export default Login;
+    ```
+
+    ```javascript
+    import { useContext } from "react";
+    //import the context we created in the parent component
+
+    import { AppContext } from "../views/PracticeContext";
+
+    const User = () => {
+
+        //now we can grab whatever states we want by destructuring the context
+        //we pass in the collection of states we created with createContext to useContext
+        const { username} = useContext(AppContext);
+        
+    return (
+        <div>
+            <h1>User: {username}</h1>
+        </div>
+    );
+    }
+
+    export default User;
+    ```
+- useMemo hook
+  - the use memoHook should be used if you have functions in your components that take a lot of time but you do not want those functions called on every render.
+  - Having functions like that called on every render(every state change) would not be good.
+  - The useMemo Hook takes in a function to compute and a dependency array. The function in the useMemo hook will only run when there are changes to the dependency array. It's similar to the dependency array in useEffect.
+  - below we have a function that gets the largest name in the comments array which is accessed through a fetch call.
+  - To make sure the function does not run everytime the toggle state is changed, we put it in the useMemo hook.
+    ```javascript
+    import { useState, useEffect, useMemo } from "react";
+
+    const PracticeMemo = () => {
+        const [comments, setComments] = useState(null);
+        const [toggle, setToggle] = useState(false);
+
+        useEffect(() => {
+            const getData = async () => {
+                const response = await fetch('https://jsonplaceholder.typicode.com/comments');
+                const data = await response.json();
+                setComments(data);
+            }
+            getData();
+        }, [])
+
+
+    const findLongestName = (comments) => {
+        if (!comments) return null;
+
+        let longestName = "";
+        for (let i = 0; i < comments.length; i++) {
+        let currentName = comments[i].name;
+        if (currentName.length > longestName.length) {
+            longestName = currentName;
+        }
+        }
+
+        console.log("THIS WAS COMPUTED");
+
+        return longestName;
+    };
+    //useMemo takes in two arguments, a function and a dependency array
+    //the dependency array is what will cause the function to run again
+    //if we do not use useMemo then the function will run everytime the state changes
+    //useMemo will only run the function when the comments data has changed
+    const getLongestName = useMemo(() => findLongestName(comments), [comments])
+
+        return(
+            <div>
+                {/* <div>{findLongestName(comments)}</div> */}
+                <div>{getLongestName}</div>
+                <button
+            onClick={() => {
+            setToggle(!toggle);
+            }}
+        >
+            {" "}
+            Toggle
+        </button>
+        {toggle && <h1> toggle </h1>}
+            </div>
+        );
+    }
+    export default PracticeMemo;
+    ```
+- useCallback Hook
+  - useCallback is similar to the useMemo hook but instead of passing a function that was defined previously, you can pass an inline callback and an array of dependencies. UseMemo stores a value not a function.
+  - This helps stop unnecessary renders
+    ```javascript
+    import { useState, useCallback } from "react";
+    import Child from "../components/Child";
+    const PracticeCallback = () => {
+        const [toggle, setToggle] = useState(null);
+        const [data, setData] = useState("Hello! ");
+
+
+
+        const returnComment = useCallback((name) => {
+            return data + name;
+        }, [data]);
+
+        return(
+            <div>
+                <Child returnComment={returnComment} />
+                <button
+                    onClick={() => {
+                        setToggle(!toggle)
+                    }}
+                >{" "}Toggle</button>
+                {toggle && <h1>toggle</h1>}
+            </div>
+        );
+    }
+    export default PracticeCallback;
+
+    ```
+
+    ```javascript
+    import { useEffect } from "react";
+    const Child = ({ returnComment }) => {
+
+        useEffect(() => {
+            console.log("FUNCTION WAS CALLED")
+        }, [returnComment])
+
+        return(
+            <div>{returnComment("Andrea")}</div>
+        );
+    }
+    export default Child;
+    ```
