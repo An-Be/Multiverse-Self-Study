@@ -27,8 +27,8 @@ Create a project in React using Context (with useContext hook) for state managem
 - [x] [useTransition Hook](https://www.youtube.com/watch?v=N5R6NL3UE7I)
 - [x] [useDefferedValue Hook](https://www.youtube.com/watch?v=jCGMedd6IWA)
 - [x] [useId Hook](https://www.youtube.com/watch?v=_vwCKV7f_eA&list=RDCMUCFbNIlppjAuEX4znoulh0Cw&index=14)
-- [ ] [React Context API Course](https://www.youtube.com/watch?v=t9WmZFnE6Hg)
-- [ ] [Testing React 16 Applications with Jest 26](https://app.pluralsight.com/library/courses/testing-react-applications-jest/table-of-contents)
+- [x] [React Context API Course](https://www.youtube.com/watch?v=t9WmZFnE6Hg)
+- [ ] [Testing React 16 Applications with Jest 26](https://app.pluralsight.com/library/courses/testing-react-applications-jest/table-of-contents) - in progress
 
 ## Progress
 [Pluralsight Profile](https://app.pluralsight.com/profile/andrea-berrocal-b)
