@@ -5,7 +5,10 @@
 // import PracticeImperative from './views/PracticeImperative';
 // import PracticeContext from './views/PracticeContext';
 // import PracticeMemo from './views/PracticeMemo';
-import PracticeCallback from './views/PracticeCallback';
+// import PracticeCallback from './views/PracticeCallback';
+//import PracticeTransition from './views/PracticeTransition';
+// import PracticeDeferred from './views/PracticeDeffered';
+import PracticeId from './views/PracticId';
 import './App.css';
 
 function App() {
@@ -19,7 +22,10 @@ function App() {
     {/* <PracticeImperative /> */}
     {/* <PracticeContext /> */}
     {/* <PracticeMemo /> */}
-    <PracticeCallback />
+    {/* <PracticeCallback /> */}
+    {/* <PracticeTransition /> */}
+    {/* <PracticeDeferred /> */}
+    <PracticeId />
     </div>
   );
 }
