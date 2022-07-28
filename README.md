@@ -11,6 +11,7 @@
     - [Monday](#monday)
     - [Tuesday](#tuesday)
     - [Wednesday](#wednesday)
+    - [Wednesday](#wednesday-1)
 
 ## Technologies to focus on
 - React
@@ -29,6 +30,7 @@ Create a project in React using Context (with useContext hook) for state managem
 - [x] [useId Hook](https://www.youtube.com/watch?v=_vwCKV7f_eA&list=RDCMUCFbNIlppjAuEX4znoulh0Cw&index=14)
 - [x] [React Context API Course](https://www.youtube.com/watch?v=t9WmZFnE6Hg)
 - [x] [Testing React with Jest](https://www.youtube.com/watch?v=JBSUgDxICg8)
+- [ ] [Automating UI tests with Jest and React Testing Library](https://www.diogorodrigues.dev/blog/automating-ui-tests-with-jest-and-react-testing-library)
 
 ## Progress
 [Pluralsight Profile](https://app.pluralsight.com/profile/andrea-berrocal-b)
@@ -945,3 +947,9 @@ describe(Counter, () => {
 });
 ```
 ![image](./readmeImg/testCounter.png "testCounter")
+
+### Wednesday
+  - Today I worked mainly on getting my project up and running and understanding the api I will be using. 
+  - I also took some time to try to figure out how I could scale everything down because the api I am using Jikan is thousands of pages long
+  - For my project I chose to do a site that is similar to my anime list but I will only be using the top 25 anime and top 25 manga instead of the 20,000+ anime/manga in existence. 
+  - I completed the fetch api calls to the top 25 manga and anime and then refactored my code by making a custom hook that contains code to make fetch api calls.
