@@ -11,7 +11,8 @@
     - [Monday](#monday)
     - [Tuesday](#tuesday)
     - [Wednesday](#wednesday)
-    - [Wednesday](#wednesday-1)
+    - [Thursday](#thursday)
+    - [Friday](#friday)
 
 ## Technologies to focus on
 - React
@@ -21,6 +22,9 @@
 
 ## Overall Idea for Final Project
 Create a project in React using Context (with useContext hook) for state management. Additionally, you could learn how to use Jest to specifically test your React frontend, as Jest comes prebuilt in the create-react-app. Additionally, think about trying to familiarize yourself with the new hooks of React 18.
+  - scaled down version of myanimelist.net
+  - Using Jikan API
+  - [repo](https://github.com/An-Be/top-anime-archive)
 
 ## What am I using to study?
 - [x] [React 17: Getting Started](https://app.pluralsight.com/library/courses/react-js-getting-started/table-of-contents)
@@ -948,8 +952,10 @@ describe(Counter, () => {
 ```
 ![image](./readmeImg/testCounter.png "testCounter")
 
-### Wednesday
+### Thursday
   - Today I worked mainly on getting my project up and running and understanding the api I will be using. 
   - I also took some time to try to figure out how I could scale everything down because the api I am using Jikan is thousands of pages long
   - For my project I chose to do a site that is similar to my anime list but I will only be using the top 25 anime and top 25 manga instead of the 20,000+ anime/manga in existence. 
   - I completed the fetch api calls to the top 25 manga and anime and then refactored my code by making a custom hook that contains code to make fetch api calls.
+
+### Friday
