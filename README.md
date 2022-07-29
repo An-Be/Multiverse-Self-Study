@@ -959,3 +959,40 @@ describe(Counter, () => {
   - I completed the fetch api calls to the top 25 manga and anime and then refactored my code by making a custom hook that contains code to make fetch api calls.
 
 ### Friday
+  - I refactored my code once again to use useContext instead of just the custom hook, I also added a new component to show five anime and five manga on the home page.
+  - Everything worked well but now I am running into a 429 error where the new component rendering five manga/anime is causing too many API requests because two requests are happening one right after another.
+  - I also went over jest a bit more and did some practice tests
+
+    ```javascript
+
+    //snapshot takes snapshot of data
+    test('the pizza data is correct', () => {
+        expect(pizzas).toMatchSnapshot();
+        expect(pizzas).toHaveLength(4);
+        expect(pizzas.map(pizza => pizza.name)).toEqual([
+            'Chicago Pizza',
+            'Neapolitan Pizza',
+            'New York Pizza',
+            'Sicilian Pizza',
+        ]);
+    })
+
+    //test length of data and properties
+    for(let i =0; i< pizzas.length; i += 1){
+        test(`pizza[${i}] should have properties (id,name,image,desc,price)`, () => {
+            expect(pizzas[i]).toHaveProperty('id');
+            expect(pizzas[i]).toHaveProperty('name');
+            expect(pizzas[i]).toHaveProperty('image');
+            expect(pizzas[i]).toHaveProperty('desc');
+            expect(pizzas[i]).toHaveProperty('price');
+        })
+    }
+
+    //mocking
+    test('mock implementation of a basic function', () => {
+        const mock = jest.fn(() => 'I am a mock function');
+        expect(mock('Calling my mock function!')).toBe('I am a mock function');
+        expect(mock).toHaveBeenCalledWith('Calling my mock function!');
+    })
+    ```
+   - The self-study week is over but now we have a 2 week hackathon in which I will continue studying jest and will also be studying the fundamentals of Java
